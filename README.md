@@ -1,0 +1,2 @@
+# hydroponic_experimental_automated_platform
+(Software Component) Essentially a supervisory control and data acquisition system designed to precisely control the ratios of nutrients administered to plants and gather and present relevant data related to its growth. Apart from the basic process control system, an emergency shut down system and alarm system was also implemented. The control strategy was implemented in Python and the GUI was implemented using the Flask web development platform. The relevant data was stored in a MySQL Database. 
