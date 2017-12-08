@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{%block body%}
+
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+<div id="overlay"></div>
+
+
+<div class="container">
+   <div class="jumbotron">
+      <form id="ndviform" method="POST" enctype="multipart/form-data" action="/ndvicalc/">
+      <div class="form-group">
+         <label >Select Image</label>
+         <input type="file" name="photo">
+      </div>
+      <div class="text-center">
+         <button type="submit" class="btn btn-default text-centre">Calculate NDVI</button>
+      </div>
+      <br>
+      <h2 class="text-center">{{ndvi}}</h2>
+   </div>
+</div>
+
+{%endblock%}
+
+
+{%block js%}
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+$( "#ndviform" ).submit(function( event ) {
+  $("#overlay").show();
+});
+});
+</script>
+
+{%endblock%}

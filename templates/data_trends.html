@@ -1,0 +1,477 @@
+{% extends "base.html" %}
+
+{%block body%}
+
+
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="/data/trends/">Trends</a></li>
+  <!-- use data binding for badge -->
+  <li><a href="/data/images/">Images</a></li>
+  <li><a href="/data/additionalsensors/">Additional Sensors</a></li>
+</ul>
+
+
+<div class="tab-content">
+  <div id="trends" class="tab-pane fade in active">
+    <!-- <h3>HOME</h3> -->
+    <div id="alarmNotification"></div>
+    <div id="flashMessage"></div>
+    <br>
+
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">Trough Levels</a>
+      </h4>
+    </div>
+    <!-- <div id="collapse1" class="panel-collapse collapse in"> -->
+    <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+      	<div id="levels" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse2">Ambient Conditions</a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse collapse in">
+    <!-- <div id="collapse2" class="panel-collapse collapse in"> -->
+      <div class="panel-body">
+    
+      	<div id="ambient" style="min-width: 310px; height: 500px; margin: 0 auto">
+      	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse3">NDVI</a>
+      </h4>
+    </div>
+    <div id="collapse3" class="panel-collapse collapse in">
+    <!-- <div id="collapse3" class="panel-collapse collapse in"> -->
+      <div class="panel-body">
+
+        <div id="ndvi" style="min-width: 310px; height: 500px; margin: 0 auto">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="panel-group">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse4">Dosing Logs</a>
+      </h4>
+    </div>
+    <div id="collapse4" class="panel-collapse collapse in">
+    <!-- <div id="collapse4" class="panel-collapse collapse in"> -->
+      <div class="panel-body">
+
+        <div id="doselogs" style="min-width: 310px; height: 500px; margin: 0 auto">
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  </div>
+</div>
+
+
+{%endblock%}
+
+{%block js%}
+<script src="{{ url_for ('static', filename = 'js/highstock.js')}}"></script>
+<script src="{{ url_for ('static', filename = 'js/highcharts-more.js')}}"></script>
+<script src="{{ url_for ('static', filename = 'js/exporting.js')}}"></script>
+<script src="{{ url_for ('static', filename = 'js/export-csv.js')}}"></script>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+$('#ambient').highcharts({
+        chart: {
+            type: 'spline',
+            zoomType: 'x'
+        },
+         credits: {
+        enabled: false
+        },
+        legend: {
+            enabled: true
+            },
+            
+         rangeSelector: {
+                allButtonsEnabled: true,
+                selected: 1,
+                enabled: true,
+                buttons: [{
+                type: 'day',
+                count: 1,
+                text: '1d'
+              },{
+                type: 'week',
+                count: 1,
+                text: '1w'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1m'
+              }, {
+                type: 'month',
+                count: 3,
+                text: '3m'
+              }, {
+                type: 'all',
+                text: 'All'
+              }]
+            },
+        title: {
+            text: 'Ambient Conditions'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+          },
+        
+        tooltip: {
+                shared: true,
+                crosshairs: true
+            
+        },
+
+        
+
+        series: [{
+        
+            name: 'Temperature (°C)',
+            data: {{temperature_data|safe}}
+        }, {
+            name: 'Humidity (%)',
+            data: {{humidity_data|safe}}
+        },
+        {
+            name: 'Light Intensity (lux)',
+            data: {{light_data|safe}}
+        }
+        ]
+    });
+
+
+
+// levels ==============================
+
+$('#levels').highcharts({
+        chart: {
+            type: 'spline',
+            zoomType: 'x'
+        },
+
+        credits: {
+          enabled: false
+        },
+
+        legend: {
+            enabled: true
+            },
+            
+         rangeSelector: {
+                allButtonsEnabled: true,
+                selected: 1,
+                enabled: true,
+                buttons: [{
+                type: 'day',
+                count: 1,
+                text: '1d'
+              },{
+                type: 'week',
+                count: 1,
+                text: '1w'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1m'
+              }, {
+                type: 'month',
+                count: 3,
+                text: '3m'
+              }, {
+                type: 'all',
+                text: 'All'
+              }],
+            },
+        title: {
+            text: 'Trough Levels'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Level (cm)'
+            },
+          },
+        
+        tooltip: {
+                shared: true,
+                crosshairs: true
+        },
+
+
+        series: [{
+        
+            name: 'Trough 1 (cm)',
+            data: {{trough_1_data|safe}}
+        }, {
+        
+            name: 'Trough 2 (cm)',
+            data: {{trough_2_data|safe}}
+        }, {
+        
+            name: 'Trough 3 (cm)',
+            data: {{trough_3_data|safe}}
+        }, {
+        
+            name: 'Trough 4 (cm)',
+            data: {{trough_4_data|safe}}
+        }, {
+        
+            name: 'Trough 5 (cm)',
+            data: {{trough_5_data|safe}}
+        }
+        ]
+    });
+
+// ndvi ==============================
+
+$('#ndvi').highcharts({
+        chart: {
+            type: 'spline',
+            zoomType: 'x'
+        },
+
+        credits: {
+          enabled: false
+        },
+
+        legend: {
+            enabled: true
+            },
+            
+         rangeSelector: {
+                allButtonsEnabled: true,
+                selected: 1,
+                enabled: true,
+                buttons: [{
+                type: 'day',
+                count: 1,
+                text: '1d'
+              },{
+                type: 'week',
+                count: 1,
+                text: '1w'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1m'
+              }, {
+                type: 'month',
+                count: 3,
+                text: '3m'
+              }, {
+                type: 'all',
+                text: 'All'
+              }],
+            },
+        title: {
+            text: 'Average NDVI'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Average NDVI Index'
+            },
+          },
+        
+        tooltip: {
+                shared: true,
+                crosshairs: true
+        },
+
+
+        series: [{
+        
+            name: 'Trough 1',
+            data: {{trough_1_ndvi|safe}}
+        }, {
+        
+            name: 'Trough 2',
+            data: {{trough_2_ndvi|safe}}
+        }, {
+        
+            name: 'Trough 3',
+            data: {{trough_3_ndvi|safe}}
+        }, {
+        
+            name: 'Trough 4',
+            data: {{trough_4_ndvi|safe}}
+        }, {
+        
+            name: 'Trough 5',
+            data: {{trough_5_ndvi|safe}}
+        }
+        ]
+    });
+
+
+// # dosing logs =======================================
+
+$('#doselogs').highcharts({
+        chart: {
+            type: 'column',
+            // type: 'spline',
+            zoomType: 'x'
+        },
+
+        credits: {
+          enabled: false
+        },
+
+        legend: {
+            enabled: true
+            },
+            
+         rangeSelector: {
+                allButtonsEnabled: true,
+                selected: 1,
+                enabled: true,
+                buttons: [{
+                type: 'day',
+                count: 1,
+                text: '1d'
+              },{
+                type: 'week',
+                count: 1,
+                text: '1w'
+              },
+              {
+                type: 'month',
+                count: 1,
+                text: '1m'
+              }, {
+                type: 'month',
+                count: 3,
+                text: '3m'
+              }, {
+                type: 'all',
+                text: 'All'
+              }],
+            },
+        title: {
+            text: 'Dosing Logs'
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Date'
+            },
+
+            // crosshair: true
+        },
+        yAxis: {
+            title: {
+                text: 'Volume (ml)'
+            },
+          },
+
+        tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+        // crosshairs: true
+    },
+     plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+
+
+        series: [{
+        
+            name: 'Trough 1 (ml)',
+            data: {{trough_1_dose_data|safe}}
+        }, {
+        
+            name: 'Trough 2 (ml)',
+            data: {{trough_2_dose_data|safe}}
+        }, {
+        
+            name: 'Trough 3 (ml)',
+            data: {{trough_3_dose_data|safe}}
+        }, {
+        
+            name: 'Trough 4 (ml)',
+            data: {{trough_4_dose_data|safe}}
+        }, {
+        
+            name: 'Trough 5 (ml)',
+            data: {{trough_5_dose_data|safe}}
+        }
+        ]
+    });
+
+});
+</script>
+
+
+
+{%endblock%}

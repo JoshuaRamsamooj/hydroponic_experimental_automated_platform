@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{%block body%}
+{% include 'modals.html' %}
+
+<div id="alarmNotification"></div>
+
+<div id="flashMessage"></div>
+<div id="overlay"></div>
+
+
+<div class="row">
+
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#collapse1">System Toggles</a>
+                </h4>
+            </div>
+
+            <div id="collapse1" class="panel-collapse collapse">
+              <div class="panel-body">
+              <ul class="list-inline">
+                <li><strong>Process</strong></li>
+
+                <li class="pull-right">
+
+                  {% if states['system_state'] == 'on' %}
+
+                  <input class="toggleSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" id="system_state">
+                  
+                  {% elif states['system_state'] == 'off' %}
+
+                  <input class="toggleSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" id="system_state">
+
+                  {% endif %}
+
+                </li>
+                
+              </ul>
+
+              <br>
+
+              <ul class="list-inline">
+                <li><strong>Plant Lights</strong></li>
+
+                <li class="pull-right">
+
+                  {% if states['plant_lights'] == 'on' %}
+
+                  <input class="regularSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" id="plant_lights">
+                  {% elif states['plant_lights'] == 'off' %}
+
+                  <input class="regularSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" id="plant_lights">
+                  {% endif %}
+  
+                </li>
+                
+              </ul>
+
+              <br>
+
+              <ul class="list-inline">
+                <li><strong>Air Pump</strong></li>
+
+                <li class="pull-right">
+
+                  {% if states['air_pump'] == 'on' %}
+
+                  <input class="regularSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" id="air_pump">
+                  {% elif states['air_pump'] == 'off' %}
+
+                  <input class="regularSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" id="air_pump">
+                  {% endif %}
+
+                </li>
+                
+              </ul>
+              
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#collapse3">Alarm Colour Code</a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+            <div class="panel-body">
+              <p>
+                <img align="middle" src="/static/img/critical.png">
+                &emsp;<strong>Critical</strong>
+              </p>
+              <p>
+                <img align="middle" src="/static/img/high.png">
+                &emsp;<strong>High</strong>
+              </p>
+              <p>
+                <img align="middle" src="/static/img/medium.png">
+                &emsp;<strong>Medium</strong>
+              </p>
+              <p>
+                <img align="middle" src="/static/img/low.png">
+                &emsp;<strong>Low</strong>
+              </p>            
+            </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+{% include 'pid.svg' %}
+<br>
+<br>
+
+
+{%endblock%}
+
+{%block js%}
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	var equipmentDataSource = new EventSource("{{ url_for('_get_equipment_data') }}");
+    equipmentDataSource.onmessage = function(e) {
+    	// //console.log(e.data)
+      var equipmentData = jQuery.parseJSON(e.data);
+
+      $('text.tank_6').text(equipmentData.tank_6);
+      $('text.tank_7').text(equipmentData.tank_7);
+      $('text.tank_8').text(equipmentData.tank_8);
+      $('text.tank_9').text(equipmentData.tank_9);
+      $('text.tank_10').text(equipmentData.tank_10);
+      $('text.tank_water').text(equipmentData.tank_water);
+      $('text.tank_mixing').text(equipmentData.tank_mixing);
+      $('text.trough_1').text(equipmentData.trough_1);
+      $('text.trough_2').text(equipmentData.trough_2);
+      $('text.trough_3').text(equipmentData.trough_3);
+      $('text.trough_4').text(equipmentData.trough_4);
+      $('text.trough_5').text(equipmentData.trough_5);
+      $('text.light').text(equipmentData.light);
+      $('text.temperature').text(equipmentData.temperature);
+      $('text.humidity').text(equipmentData.humidity);
+      $('text.valve_1').text(equipmentData.valve_1);
+      $('text.valve_2').text(equipmentData.valve_2);
+      $('text.valve_3').text(equipmentData.valve_3);
+      $('text.valve_4').text(equipmentData.valve_4);
+      $('text.valve_5').text(equipmentData.valve_5);
+      $('text.valve_drain').text(equipmentData.valve_drain);
+      $('text.pump_6').text(equipmentData.pump_6);
+      $('text.pump_7').text(equipmentData.pump_7);
+      $('text.pump_8').text(equipmentData.pump_8);
+      $('text.pump_9').text(equipmentData.pump_9);
+      $('text.pump_10').text(equipmentData.pump_10);
+      $('text.pump_water').text(equipmentData.pump_water);
+      $('text.pump_mixing').text(equipmentData.pump_mixing);
+      $('text.pump_air').text(equipmentData.pump_air);
+
+
+      var critical = equipmentData.critical
+
+      $.each(critical, function(index, value){
+      	$('rect.'+value).css("fill", "#ED1F23");
+      });
+
+      var high = equipmentData.high
+
+      $.each(high, function(index, value){
+      	$('rect.'+value).css("fill", "#F3EB1E");
+      });
+
+      var medium = equipmentData.medium
+
+      $.each(medium, function(index, value){
+      	$('rect.'+value).css("fill", "#F79532");
+      });
+
+      var low = equipmentData.low
+
+      $.each(low, function(index, value){
+      	$('rect.'+value).css("fill", "#EC3899");
+      });
+    }
+
+
+
+
+    // toggles ======================================================
+    $('#system_state.toggleSwitch').change(function() {
+      // alert('system toggle')
+
+      var state = $(this).prop('checked')
+
+      if (state==false){modalState='OFF '}
+      else {modalState='ON '}
+
+      $("#state").text(modalState)
+      $("#confirmSwitchToggle").modal({backdrop: 'static', keyboard: false});
+      $(".switchToggle").data('state', state)
+
+    });
+
+    $("#confirmSwitchToggle").on('click', '.switchCancel', function(){
+      var state = $(".switchToggle").data('state')
+      //console.log(state)
+      if (state==false){
+        $('#system_state').bootstrapToggle('on')
+      }
+      else if (state==true){
+        $('#system_state').bootstrapToggle('off')
+      }
+    });
+
+
+    $("#confirmSwitchToggle").on('click', '.switchToggle', function(event){
+        var state = $(this).data('state')
+
+        if (state == false) {
+        $('#plant_lights').bootstrapToggle('off')
+        $('#air_pump').bootstrapToggle('off')
+        $.ajax({
+            data: {
+                state: state
+            },
+            type: 'POST',
+            url: '/_toggle_system'
+        });
+        $("#confirmSwitchToggle").modal('hide');
+        $("#overlay").show().delay(2000);
+        window.location.href = '/login'
+        } 
+
+        else if (state == true) {
+          $('#plant_lights').bootstrapToggle('on')
+          $('#air_pump').bootstrapToggle('on')
+
+          $.ajax({
+              data: {
+                  state: state
+              },
+              type: 'POST',
+              url: '/_toggle_system',
+              success: function(data){
+                  $("#confirmSwitchToggle").modal('hide');
+              }
+          });
+          } 
+
+
+        
+    });
+
+
+    $('.regularSwitch').change(function() {
+
+      var state = $(this).prop('checked')
+      var toggle_switch = $(this).attr('id')
+
+      $.ajax({
+          data: {
+              toggle_switch: toggle_switch,
+              state: state
+          },
+          type: 'POST',
+          url: '/_toggle_switch'
+      });
+
+    });
+
+
+
+    // dosing ===========================================================
+
+    $("#confirmDose").on('show.bs.modal', function(event){
+    var troughClicked = $(event.relatedTarget) // triggered the modal
+    var trough = troughClicked.data('trough') // Extract info from data-* attributes
+    var troughDisplayName = trough.replace('_', ' ')
+    var troughDisplayName = troughDisplayName.replace('t', 'T')
+    $('#trough', this).text(troughDisplayName);
+    $('.dose' , this).data('trough', trough)
+    });
+
+
+
+    $("#confirmDose").on('click', '.dose', function(event){
+        var trough = $(this).data('trough')
+
+        $("#confirmDose").modal('hide');
+
+    
+        // use ajax to clear image in database
+        $.ajax({
+            data: {
+                trough: trough
+            },
+            type: 'POST',
+            url: '/_manual_dose',
+            success: function(data){
+                message = data.message
+                type = data.type
+                flashMessage(message, type, 10000)
+            }
+
+        });
+
+
+
+    });
+
+
+});
+
+</script>
+
+{%endblock%}

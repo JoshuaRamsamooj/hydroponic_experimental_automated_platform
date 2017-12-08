@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{%block body%}
+{% include 'modals.html' %}
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+<div id="overlay"></div>
+
+<ul class="nav nav-tabs">
+  <li><a href="/data/trends/">Trends</a></li>
+  <!-- use data binding for badge -->
+  <li class="active"><a data-toggle="tab" href="/data/images/">Images</a></li>
+  <li><a href="/data/additionalsensors/">Additional Sensors</a></li>
+  <!-- <li><a href="/data/doselogs/">Dosing Logs</a></li> -->
+</ul>
+
+
+<div class="tab-content">
+  <div id="trends" class="tab-pane fade">
+  </div>
+
+
+<div id="images" class="tab-pane fade in active">
+
+  <!-- put imag stuff here -->
+  
+  <br>
+  <button class="btn btn-default" id="takeImage">Capture Image</button>
+  <button class="btn btn-default" id="takeImageOnly">Capture Image (Without NDVI Calculation) </button>
+  <!-- <button class="btn btn-default" id="downloadndvi">Download NDVI Data</button> -->
+
+
+  <div class="container" id="images">
+     <div class="row" >
+
+      {% for image in images %}
+
+
+      <div style="margin-top:40px" class="col-lg-3 col-md-4 col-sm-6 thumb" id = "{{image[0]}}">
+
+        <p class="text-center"><strong>Date: </strong>{{image[2]}}</p>
+        <!-- <p class="text-center"><strong>NDVI: </strong>{{image[3]}}</p> -->
+        <img class="img-responsive" src="/static/img/{{image[1]}}">
+
+        <br>
+
+        <p class="text-center">
+
+          <!-- download button -->
+
+        <a class="btn btn-default" role="button" href="/static/img/{{image[1]}}" download>
+
+          <span class="glyphicon glyphicon-download-alt" >
+
+        </a>
+
+        <button class="btn btn-default" data-toggle="modal" data-target="#comfirmImageClear" data-id="{{image[0]}}" data-name="{{image[1]}}">
+          <span class="glyphicon glyphicon-remove">
+        </button>
+
+        </p>
+
+      </div>
+
+      {% endfor %}
+
+
+        </div>
+
+  </div>
+
+
+</div>
+
+</div>
+
+<div id="doselogs" class="tab-pane fade">
+  </div>
+</div>
+
+{%endblock%}
+
+
+{%block js%}
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+$("#comfirmImageClear").on('show.bs.modal', function(event){
+    var image = $(event.relatedTarget) // image that triggered the modal
+    var id = image.data('id') // Extract info from data-* attributes
+    var name = image.data('name') // Extract info from data-* attributes
+    $('.imageClear' , this).data('imageID', id)
+    $('.imageClear' , this).data('imageName', name)
+    //console.log(id)
+});
+
+
+$("#comfirmImageClear").on('click', '.imageClear', function(event){
+
+    var id = $(this).data('imageID')
+    var name = $(this).data('imageName')
+
+    // use ajax to clear image in database
+    $.ajax({
+        data: {
+            imageid: id,
+            imagename: name
+        },
+        type: 'POST',
+        url: '/_clear_image',
+        success: function(data){
+            // close modal and clear image from screen
+            if (data.status == true){
+
+                $("#comfirmImageClear").modal('hide');
+                $("#"+id).fadeOut("slow");
+            }
+            else{
+                $("#comfirmImageClear").modal('hide');
+                //console.log('image not deleted')
+                // use a flash or something 
+            }
+        }
+
+    });
+
+});
+
+
+$( "#takeImage" ).click(function() {
+  $("#overlay").show();
+  $.ajax({
+        data: {
+        },
+        type: 'POST',
+        url: '/_take_image',
+        success: function(data){
+            // close modal and clear image from screen
+            if (data.newImage == true){
+              $("#overlay").hide();
+                location.reload();
+            }
+            else{
+              $("#overlay").hide();
+                flashMessage("Capture Failed!", "warning", 5000) 
+            }
+        }
+
+    });
+});
+
+$( "#takeImageOnly" ).click(function() {
+  $("#overlay").show();
+  $.ajax({
+        data: {
+        },
+        type: 'POST',
+        url: '/_take_image_only',
+        success: function(data){
+            // close modal and clear image from screen
+            if (data.newImage == true){
+              $("#overlay").hide();
+                location.reload();
+            }
+            else{
+              $("#overlay").hide();
+                flashMessage("Capture Failed!", "warning", 5000) 
+            }
+        }
+
+    });
+});
+
+});
+
+</script>
+
+{%endblock%}

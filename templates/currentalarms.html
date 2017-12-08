@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{%block styles%}
+<style type="text/css">
+
+.alert-critical {
+color: #6E1719;
+background-color: #E89798;
+border-color: #D67A7C;
+}
+
+.alert-high {
+color: #787528;
+background-color: #F2F0B3;
+border-color: #EBE898;
+}
+
+.alert-medium {
+color: #855422;
+background-color: #F5CA9F;
+border-color: #DBA976;
+}
+
+.alert-low {
+color: #6B1A46;
+background-color: #EDA8CD;
+border-color: #D17DAA;
+}
+
+
+</style>
+{%endblock%}
+
+{%block body%}
+{% include 'modals.html' %}
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="/alarms/currentalarms/">Current Alarms</a></li>
+  <!-- use data binding for badge -->
+  <li><a href="/alarms/alarmlogs/">Logs</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="currentAlarms" class="tab-pane fade in active">
+    <!-- <h3>HOME</h3> -->
+  
+
+    <br>
+    <!-- {{currentAlarms}} -->
+  
+    {% for currentAlarm in currentAlarms %}
+
+    <!-- iff -->
+
+    {% if  currentAlarm['priority'] == 'Critical' %}
+
+    <div class="alert alert-critical alert-dismissible" role="alert" id="{{currentAlarm['id']}}">
+      <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#comfirmAlarmClear" data-id="{{currentAlarm['id']}}"><span aria-hidden="true">&times;</span></button>
+
+       <p>
+        <span>
+          <strong>Alarm ID: </strong>
+          {{currentAlarm['id']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Priority: </strong>
+          {{currentAlarm['priority']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Description: </strong>
+          {{currentAlarm['description']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Affected Equipment: </strong>
+          {{currentAlarm['affected_equipment']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Date: </strong>
+          {{currentAlarm['date']}}
+        </span>
+       </p>
+
+    </div>
+
+    {% elif  currentAlarm['priority'] == 'High' %}
+
+    <div class="alert alert-high alert-dismissible" role="alert" id="{{currentAlarm['id']}}">
+      <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#comfirmAlarmClear" data-id="{{currentAlarm['id']}}"><span aria-hidden="true">&times;</span></button>
+
+       <p>
+        <span>
+          <strong>Alarm ID: </strong>
+          {{currentAlarm['id']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Priority: </strong>
+          {{currentAlarm['priority']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Description: </strong>
+          {{currentAlarm['description']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Affected Equipment: </strong>
+          {{currentAlarm['affected_equipment']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Date: </strong>
+          {{currentAlarm['date']}}
+        </span>
+       </p>
+
+    </div>
+
+    {% elif  currentAlarm['priority'] == 'Medium' %}
+
+    <div class="alert alert-medium alert-dismissible" role="alert" id="{{currentAlarm['id']}}">
+      <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#comfirmAlarmClear" data-id="{{currentAlarm['id']}}"><span aria-hidden="true">&times;</span></button>
+
+       <p>
+        <span>
+          <strong>Alarm ID: </strong>
+          {{currentAlarm['id']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Priority: </strong>
+          {{currentAlarm['priority']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Description: </strong>
+          {{currentAlarm['description']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Affected Equipment: </strong>
+          {{currentAlarm['affected_equipment']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Date: </strong>
+          {{currentAlarm['date']}}
+        </span>
+       </p>
+
+    </div>
+
+    {% elif  currentAlarm['priority'] == 'Low' %}
+
+    <div class="alert alert-low alert-dismissible" role="alert" id="{{currentAlarm['id']}}">
+      <button type="button" class="close" aria-label="Close" data-toggle="modal" data-target="#comfirmAlarmClear" data-id="{{currentAlarm['id']}}"><span aria-hidden="true">&times;</span></button>
+
+       <p>
+        <span>
+          <strong>Alarm ID: </strong>
+          {{currentAlarm['id']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Priority: </strong>
+          {{currentAlarm['priority']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Description: </strong>
+          {{currentAlarm['description']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Affected Equipment: </strong>
+          {{currentAlarm['affected_equipment']}}
+        </span>
+       </p>
+
+       <p>
+        <span>
+          <strong>Date: </strong>
+          {{currentAlarm['date']}}
+        </span>
+       </p>
+
+    </div>
+
+
+    {% endif %}
+
+    {% endfor %}
+
+
+
+
+  </div>
+
+  <div id="alarmLogs" class="tab-pane fade">
+
+  </div>
+
+</div>
+{%endblock%}

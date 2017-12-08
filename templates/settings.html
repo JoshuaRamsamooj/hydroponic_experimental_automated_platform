@@ -1,0 +1,1372 @@
+{% extends "base.html" %}
+
+{%block styles%}
+<link href="{{ url_for ('static', filename = 'css/daterangepicker.css')}}" rel="stylesheet">
+{%endblock%}
+
+{%block body%}
+{% include 'modals.html' %}
+
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+<div id="overlay"></div>
+
+<div class="panel-group" id="accordion">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#troughs">
+        Troughs</a>
+      </h4>
+    </div>
+    <div id="troughs" class="panel-collapse collapse">
+      <div class="panel-body">
+         <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#trough_1">Trough 1</a></li>
+            <li><a data-toggle="tab" href="#trough_2">Trough 2</a></li>
+            <li><a data-toggle="tab" href="#trough_3">Trough 3</a></li>
+            <li><a data-toggle="tab" href="#trough_4">Trough 4</a></li>
+            <li><a data-toggle="tab" href="#trough_5">Trough 5</a></li>
+         </ul>
+         <div class="tab-content">
+            <div id="trough_1" class="tab-pane fade in active">
+               <br>
+
+
+               <p>
+               {% if trough_states['trough_1'] == 'on' %}
+
+               <input class="troughSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-trough="trough_1">
+               
+               {% elif trough_states['trough_1'] == 'off' %}
+
+               <input class="troughSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" data-trough="trough_1">
+
+               {% endif %}
+
+            </p>
+
+
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in trough_1 %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+
+            <div id="trough_2" class="tab-pane fade">
+               <br>
+               <p>
+               {% if trough_states['trough_2'] == 'on' %}
+
+               <input class="troughSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-trough="trough_2">
+               
+               {% elif trough_states['trough_2'] == 'off' %}
+
+               <input class="troughSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" data-trough="trough_2">
+
+               {% endif %}
+
+            </p>
+
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in trough_2 %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+
+            <div id="trough_3" class="tab-pane fade">
+               <br>
+               <p>
+               {% if trough_states['trough_3'] == 'on' %}
+
+               <input class="troughSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-trough="trough_3">
+               
+               {% elif trough_states['trough_3'] == 'off' %}
+
+               <input class="troughSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" data-trough="trough_3">
+
+               {% endif %}
+
+            </p>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in trough_3 %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="trough_4" class="tab-pane fade">
+               <br>
+               <p>
+               {% if trough_states['trough_4'] == 'on' %}
+
+               <input class="troughSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-trough="trough_4">
+               
+               {% elif trough_states['trough_4'] == 'off' %}
+
+               <input class="troughSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" data-trough="trough_4">
+
+               {% endif %}
+
+            </p>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in trough_4 %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="trough_5" class="tab-pane fade">
+               <br>
+               <p>
+               {% if trough_states['trough_5'] == 'on' %}
+
+               <input class="troughSwitch" type="checkbox" checked data-toggle="toggle" data-onstyle="success" data-trough="trough_5">
+               
+               {% elif trough_states['trough_5'] == 'off' %}
+
+               <input class="troughSwitch" type="checkbox" data-toggle="toggle" data-onstyle="success" data-trough="trough_5">
+
+               {% endif %}
+
+            </p>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in trough_5 %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}"  data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#tanks">
+        Tanks</a>
+      </h4>
+    </div>
+    <div id="tanks" class="panel-collapse collapse">
+      <div class="panel-body">
+         <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tank_6">Tank 6</a></li>
+            <li><a data-toggle="tab" href="#tank_7">Tank 7</a></li>
+            <li><a data-toggle="tab" href="#tank_8">Tank 8</a></li>
+            <li><a data-toggle="tab" href="#tank_9">Tank 9</a></li>
+            <li><a data-toggle="tab" href="#tank_10">Tank 10</a></li>
+            <li><a data-toggle="tab" href="#tank_water">Water Tank</a></li>
+            <li><a data-toggle="tab" href="#tank_mixing">Mixing Tank</a></li>
+         </ul>
+         <div class="tab-content">
+            <div id="tank_6" class="tab-pane fade in active">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_6 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="tank_7" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_7 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="tank_8" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_8 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="tank_9" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_9 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="tank_10" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_10 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+
+            <div id="tank_water" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_water %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+
+            <div id="tank_mixing" class="tab-pane fade">
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in tank_mixing %}
+                     {% if row[4] == 'cm' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% elif row[4] == 'cm2' %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(cm<sup>2</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% else %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endif %}
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#pump-flow">
+        Dosing Pumps and Flow Sensors</a>
+      </h4>
+    </div>
+    <div id="pump-flow" class="panel-collapse collapse">
+      <div class="panel-body">
+         <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#pump_6">Pump 6</a></li>
+            <li><a data-toggle="tab" href="#pump_7">Pump 7</a></li>
+            <li><a data-toggle="tab" href="#pump_8">Pump 8</a></li>
+            <li><a data-toggle="tab" href="#pump_9">Pump 9</a></li>
+            <li><a data-toggle="tab" href="#pump_10">Pump 10</a></li>
+         </ul>
+         <div class="tab-content">
+            <div id="pump_6" class="tab-pane fade in active">
+               <br>
+               <button class='btn btn-default testDosingPump' data-tank="tank_6">Test Pump 6 (Dose 10ml)</button>
+               <!-- <br> -->
+               <button class = "btn btn-default" data-toggle="collapse" data-target="#calPump6">Calibrate Pump 6</button>
+               <div id="calPump6" class="collapse">
+                  <br>
+                  <div>
+                     <h4>
+                        Instructions
+                     </h4>
+                     <p>
+                        <ol  class='calibratePumpInfo'>
+                           <li>Place output tube in measuring cylinder</li>
+                           <li>Click 'Start Calibration'</li>
+                        </ol>
+                     </p>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                     <button class='btn btn-default calibratePump' data-pump="pump_6" data-stage="1" data-cal="calPump6">Start Calibration</button>
+                  </div>
+               </div>
+               <br>
+               <br>
+
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in pump_6 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(ml s<sup>-1</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="pump_7" class="tab-pane fade">
+               <br>
+               <button class='btn btn-default testDosingPump' data-tank="tank_7">Test Pump 7 (Dose 10ml)</button>
+               <button class = "btn btn-default" data-toggle="collapse" data-target="#calPump7">Calibrate Pump 7</button>
+               <div id="calPump7" class="collapse">
+                  <br>
+                  <div>
+                     <h4>
+                        Instructions
+                     </h4>
+                     <p>
+                        <ol  class='calibratePumpInfo'>
+                           <li>Place output tube in measuring cylinder</li>
+                           <li>Click 'Start Calibration'</li>
+                        </ol>
+                     </p>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                     <button class='btn btn-default calibratePump' data-pump="pump_7" data-stage="1" data-cal="calPump7">Start Calibration</button>
+                  </div>
+               </div>
+               <br>
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in pump_7 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(ml s<sup>-1</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="pump_8" class="tab-pane fade">
+               <br>
+               <button class='btn btn-default testDosingPump' data-tank="tank_8">Test Pump 8 (Dose 10ml)</button>
+               <button class = "btn btn-default" data-toggle="collapse" data-target="#calPump8">Calibrate Pump 8</button>
+               <div id="calPump8" class="collapse">
+                  <br>
+                  <div>
+                     <h4>
+                        Instructions
+                     </h4>
+                     <p>
+                        <ol  class='calibratePumpInfo'>
+                           <li>Place output tube in measuring cylinder</li>
+                           <li>Click 'Start Calibration'</li>
+                        </ol>
+                     </p>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                     <button class='btn btn-default calibratePump' data-pump="pump_8" data-stage="1" data-cal="calPump8">Start Calibration</button>
+                  </div>
+               </div>
+               <br>
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in pump_8 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(ml s<sup>-1</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="pump_9" class="tab-pane fade">
+               <br>
+               <button class='btn btn-default testDosingPump' data-tank="tank_9">Test Pump 9 (Dose 10ml)</button>
+               <button class = "btn btn-default" data-toggle="collapse" data-target="#calPump9">Calibrate Pump 9</button>
+               <div id="calPump9" class="collapse">
+                  <br>
+                  <div>
+                     <h4>
+                        Instructions
+                     </h4>
+                     <p>
+                        <ol  class='calibratePumpInfo'>
+                           <li>Place output tube in measuring cylinder</li>
+                           <li>Click 'Start Calibration'</li>
+                        </ol>
+                     </p>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                     <button class='btn btn-default calibratePump' data-pump="pump_9" data-stage="1" data-cal="calPump9">Start Calibration</button>
+                  </div>
+               </div>
+               <br>
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in pump_9 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(ml s<sup>-1</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+            <div id="pump_10" class="tab-pane fade">
+               <br>
+               <button class='btn btn-default testDosingPump' data-tank="tank_10">Test Pump 10 (Dose 10ml)</button>
+               <button class = "btn btn-default" data-toggle="collapse" data-target="#calPump10">Calibrate Pump 10</button>
+               <div id="calPump10" class="collapse">
+                  <br>
+                  <div>
+                     <h4>
+                        Instructions
+                     </h4>
+                     <p>
+                        <ol  class='calibratePumpInfo'>
+                           <li>Place output tube in measuring cylinder</li>
+                           <li>Click 'Start Calibration'</li>
+                        </ol>
+                     </p>
+                  </div>
+                  <br>
+                  <div class="text-center">
+                     <button class='btn btn-default calibratePump' data-pump="pump_10" data-stage="1" data-cal="calPump10">Start Calibration</button>
+                  </div>
+               </div>
+               <br>
+               <br>
+               <table class="table table-bordred">
+                  <thead>
+                     <th class="col-xs-6">Property</th>
+                     <th class="col-xs-6">Value</th>
+                  </thead>
+                  <tbody>
+                     {% for row in pump_10 %}
+                     <tr class = "{{row[0]}}">
+                        <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}&nbsp;<span><strong>(ml s<sup>-1</sup>)</strong></span></td>
+                        <td class="editable">{{row[3]}}</td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#scheduling">
+        Scheduling</a>
+      </h4>
+    </div>
+    <div id="scheduling" class="panel-collapse collapse">
+      <div class="panel-body">
+        <br>
+         <table class="table table-bordred">
+            <thead>
+               <th class="col-xs-6">Event</th>
+               <th class="col-xs-6">Cron Schedule</th>
+            </thead>
+            <tbody>
+               {% for row in schedule %}
+               <tr class = "{{row[0]}}">
+                  <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}</td>
+                  <td class="editable">{{row[3]}}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#alarms">
+        Alarms</a>
+      </h4>
+    </div>
+    <div id="alarms" class="panel-collapse collapse">
+      <div class="panel-body">
+        <table class="table table-bordred">
+            <thead>
+               <th class="col-xs-6">Property</th>
+               <th class="col-xs-6">Value</th>
+            </thead>
+            <tbody>
+               {% for row in alarms %}
+               <tr class = "{{row[0]}}">
+                  <td class="{{row[2]}}" data-dimension="{{row[4]}}">{{row[1]}}<br>(<strong>N.B.</strong> comma seperate multiple email addresses)</td>
+                  <td class="editable">{{row[3]}}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#users">
+        Users</a>
+      </h4>
+    </div>
+    <div id="users" class="panel-collapse collapse">
+      <div class="panel-body">
+         <div class="text-right">
+            <button class="btn btn-default" data-toggle="modal" data-target="#createUserModal" id="createUser">Create User</button>
+         </div>
+         <table class="table table-bordred" id="usersTable">
+            <thead>
+               <th class="col-xs-5">Username</th>
+               <th class="col-xs-5">Password</th>
+               <th class="col-xs-2"></th>
+            </thead>
+            <tbody>
+               {% for user in users %}
+               <tr id="{{user[0]}}">
+                  <td>{{user[0]}}</td>
+                  <td>{{user[1]}}</td>
+                  <td class="text-right">
+                     
+                     <!-- <button class="btn btn-xs btn-default userInfo" data-username="{{user[0]}}" data-toggle="modal" data-target="#userInfoModal"><span class="glyphicon glyphicon-info-sign"></span></button> -->
+
+                     <button class="btn btn-xs btn-default userInfo" data-username="{{user[0]}}"><span class="glyphicon glyphicon-info-sign"></span></button>
+
+                     <button class="btn btn-xs btn-default deleteUser" data-username="{{user[0]}}" data-toggle="modal" data-target="#confirmUserDelete"><span class="glyphicon glyphicon-remove"></span></button>
+
+                  </td>
+               </tr>
+               {% endfor %}
+            </tbody>
+         </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#deletedata">
+        Remove Data</a>
+      </h4>
+    </div>
+    <div id="deletedata" class="panel-collapse collapse">
+      <div class="panel-body">
+          <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#ambient">Ambient Conditions</a></li>
+          <li><a data-toggle="tab" href="#levels">Trough Levels</a></li>
+          <li><a data-toggle="tab" href="#doselogs">Dosing Logs</a></li>
+          <li><a data-toggle="tab" href="#logs">Alarm Logs</a></li>
+
+        </ul>
+
+        <div class="tab-content">
+          <div id="ambient" class="tab-pane fade in active">
+            <!-- <h3>Ambient Conditions</h3> -->
+            <br>
+
+            <div class="row">
+              <div class="col-lg-10 col-lg-offset-1">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="daterange">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger datadel" data-toggle="modal" data-target="#confirmDataDelete" data-d = "ambient">
+                     <span class="glyphicon glyphicon-trash"></span> Delete
+                  </button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+
+          </div>
+
+          <div id="levels" class="tab-pane fade">
+            <br>
+
+            <div class="row">
+              <div class="col-lg-10 col-lg-offset-1">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="daterange">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger datadel" data-toggle="modal" data-target="#confirmDataDelete" data-d = "levels">
+                     <span class="glyphicon glyphicon-trash"></span> Delete
+                  </button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+
+          </div>
+
+          <div id="logs" class="tab-pane fade">
+            <br>
+
+            <div class="row">
+              <div class="col-lg-10 col-lg-offset-1">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="daterange">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger datadel" data-toggle="modal" data-target="#confirmDataDelete" data-d = "logs">
+                     <span class="glyphicon glyphicon-trash"></span> Delete
+                  </button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+
+          </div>
+
+          <div id="doselogs" class="tab-pane fade">
+            <br>
+
+            <div class="row">
+              <div class="col-lg-10 col-lg-offset-1">
+                <div class="input-group">
+                  <input type="text" class="form-control" name="daterange">
+                  <span class="input-group-btn">
+                    <button class="btn btn-danger datadel" data-toggle="modal" data-target="#confirmDataDelete" data-d = "doselogs">
+                     <span class="glyphicon glyphicon-trash"></span> Delete
+                  </button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+
+          </div>
+
+        </div> 
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#troubleshoot">
+        Troubleshoot</a>
+      </h4>
+    </div>
+    <div id="troubleshoot" class="panel-collapse collapse">
+      <div class="panel-body">
+         
+         <table class="table table-bordred" id="usersTable">
+            <thead>
+               <th class="col-xs-8">Equipment</th>
+               <th class="col-xs-4"></th>
+            </thead>
+            <tbody>
+               <tr id="valve_1">
+                  <td style="vertical-align: middle;">Valve 1</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="valve_2">
+                  <td style="vertical-align: middle;">Valve 2</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="valve_3">
+                  <td style="vertical-align: middle;">Valve 3</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="valve_4">
+                  <td style="vertical-align: middle;">Valve 4</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="valve_5">
+                  <td style="vertical-align: middle;">Valve 5</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+
+               <tr id="pump_mixing">
+                  <td style="vertical-align: middle;">Mixing Pump</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_water">
+                  <td style="vertical-align: middle;">Water Pump</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_6">
+                  <td style="vertical-align: middle;">Pump 6</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_7">
+                  <td style="vertical-align: middle;">Pump 7</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_8">
+                  <td style="vertical-align: middle;">Pump 8</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_9">
+                  <td style="vertical-align: middle;">Pump 9</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+               <tr id="pump_10">
+                  <td style="vertical-align: middle;">Pump 10</td>
+                  <td class="text-right">
+                     <button class="btn btn-s btn-default troubleshootButton" >Test</span></button>
+                  </td>
+               </tr>
+
+            </tbody>
+         </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+{%endblock%}
+
+
+
+{%block js%}
+
+<script src="{{ url_for ('static', filename = 'js/settings.js')}}"></script>
+<script src="{{ url_for ('static', filename = 'js/moment.min.js')}}"></script>
+<script src="{{ url_for ('static', filename = 'js/daterangepicker.js')}}"></script>
+
+<script type="text/javascript">
+
+
+function displayForm (cell) {
+  // $("#overlay").show();
+
+  var cell=cell
+
+  var prevValue = cell.text()
+  var table = cell.closest('tr').attr('class')
+  var record = cell.prev('td').attr('class')
+  var dimension = cell.prev('td').attr('data-dimension')
+  var cellWidth = cell.css('width')//get width of cell for styling width of input field
+  //console.log(prevValue)
+  
+  if (table=='schedules'){
+    var form = '<form action="javascript: this.preventDefault" class="form-inline rowEditForm" autocomplete="off"><select class="form-control cronSelect" name="newValue"><option value="0 */6 * * *">Every 6 Hours</option><option value="0 */12 * * *">Every 12 Hours</option><option value="0 9 * * *">Every Day at 9am</option><option value="0 9 * * 1">Every Monday at 9am</option><option value="disabled">Disabled</option><option value="other">Other Cron</option><input type="text" class="form-control" name="newValue" size="4"/><input type="hidden" name="table" value="'+table+'" /><input type="hidden" name="record" value="'+record+'" /><input type="hidden" name="dimension" value="'+dimension+'" />&nbsp;<button type="button" class="btn btn-success sub"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;<button type="button" class="btn btn-danger cancel"><span class="glyphicon glyphicon-remove"></span></button></form>';
+
+      // $('option[name="'+prevValue+'"]').attr('selected','selected');
+       cell.html(form).find('select option:contains("'+prevValue+'")').attr("selected",true);
+
+       $("input[name=newValue]").hide();
+
+       $( ".cronSelect" ).change(function() {
+          $(this).next('input[name=newValue]').toggle((this.value) == 'other')
+        });
+
+  }
+  else {
+    var form = '<form action="javascript: this.preventDefault" class="form-inline rowEditForm" autocomplete="off"><input type="text" class="form-control" name="newValue" value="'+
+           prevValue+'" /><input type="hidden" name="table" value="'+table+'" /><input type="hidden" name="record" value="'+record+'" /><input type="hidden" name="dimension" value="'+dimension+'" />&nbsp;<button type="button" class="btn btn-success sub"><span class="glyphicon glyphicon-ok"></span></button>&nbsp;<button type="button" class="btn btn-danger cancel"><span class="glyphicon glyphicon-remove"></span></button></form>';
+
+    cell.html(form).find('input[type=text]').focus();
+  }
+
+  $('td.editable').bind('click', function(){return false});
+
+  $('.cancel').on('click', function () {
+    cell.text(prevValue)//revert to original value
+    $('td.editable').unbind('click') //reactivate editing
+  });
+
+   $('.sub').on('click', function () {
+    updateCell(cell, prevValue)
+  });
+}
+
+function updateCell (cell, prevValue) {
+
+  // cell.unbind('click')
+  $("#overlay").show();
+
+  $('td.editable').unbind('click')
+  
+  form = cell.find('form')
+  var table = cell.closest('tr').attr('class')
+
+  if (table=='schedules'){
+
+    newValue = form.find('select[name="newValue"]').val();
+    if (newValue=='other'){
+      newValue = form.find('input[name="newValue"]').val();
+    } else {
+      newValue = newValue
+    }
+  }
+
+  else {
+    newValue = form.find('input[name="newValue"]').val();
+  }
+  
+  table = form.find('input[name="table"]').val();
+  record = form.find('input[name="record"]').val();
+  dimension = form.find('input[name="dimension"]').val();
+
+  $.ajax({
+      type: "POST",
+      url: '/_edit_table',
+      data: {
+        newValue: newValue,
+        table: table,
+        record: record,
+        dimension: dimension
+      },
+      success: function(response) {
+        if (response.status == true){
+          cell.text(response.newValue);//revert to original value
+          $("#overlay").hide();
+          $('td.editable').unbind('click')
+        }
+        else if (response.status == false){
+          cell.text(prevValue);//revert to original value
+          $("#overlay").hide();
+          flashMessage(response.message, 'danger', 2000)
+          $('td.editable').unbind('click') //reactivate editing
+        }
+        else if (response.status == 'warning'){
+          cell.text(response.newValue);//revert to original value
+          $("#overlay").hide();
+          flashMessage(response.message, 'warning', 2000)
+          $('td.editable').unbind('click') //reactivate editing
+        }
+      }
+  });
+}
+
+
+
+$(document).ready(function() {
+
+   // data delete 
+   $("#confirmDataDelete").on('show.bs.modal', function(event){
+       var d = $(event.relatedTarget) // image that triggered the modal
+       var table = d.data('d') // Extract info from data-* attributes
+       var drange = d.closest("div.row").find("input[name='daterange']").val();
+       $('.dataDelete' , this).data('table', table)
+       $('.dataDelete' , this).data('drange', drange)
+   });
+
+
+   // troubleshooting 
+   $(".troubleshootButton").on('click', function(event){
+
+       var device = $(this).closest('tr').attr('id')
+
+       $.ajax({
+           data: {
+               device: device
+           },
+           type: 'POST',
+           url: '/_troubleshoot'
+       });
+   });
+
+   // pump testing 
+   $('.testDosingPump').on('click', function () {
+       var tank = $(this).attr('data-tank')
+       console.log(tank)
+       $.ajax({
+           data: {
+               tank: tank
+           },
+           type: 'POST',
+           url: '/_test_dosing_pump'
+       });
+   });
+
+
+   $("#confirmDataDelete").on('click', '.dataDelete', function(event){
+
+       // console.log('clicked')
+       var table = $(this).data('table')
+       var drange = $(this).data('drange')
+       console.log(table)
+       console.log(drange)
+       $("#confirmDataDelete").modal('hide');
+       $("#overlay").show();
+
+       $.ajax({
+           data: {
+               table: table,
+               drange: drange
+           },
+           type: 'POST',
+           url: '/_delete_data',
+           success: function(data){
+               // close modal and clear image from screen
+               if (data.status == true){
+
+                   $("#overlay").hide();
+                   flashMessage("Success!", 'success', 2000);
+               }
+               else{
+                   $("#overlay").hide();
+                   flashMessage("Error!", 'danger', 2000);
+               }
+           }
+
+       });
+
+   });
+
+   $('input[name="daterange"]').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        locale: {
+            format: 'YYYY-MM-DD HH:mm:ss'
+        }
+    });
+
+   $('.troughSwitch').change(function() {
+
+      var state = $(this).prop('checked')
+      var trough = $(this).attr('data-trough')
+
+      console.log(state)
+      console.log(trough)
+
+      $.ajax({
+        data: {
+              trough: trough,
+              state: state
+          },
+
+        type: 'POST',
+        url: '/_toggle_trough'
+    });
+    });
+
+
+
+  $('tbody').on('click','td.editable',function() {
+    displayForm ($(this))
+  });
+
+
+
+  $("#confirmUserDelete").on('show.bs.modal', function(event){
+    var user = $(event.relatedTarget) // image that triggered the modal
+    var username = user.data('username') // Extract info from data-* attributes
+    $('#modal-username', this).text(username);
+    $('.userDelete' , this).data('username', username)
+});
+
+
+$("#confirmUserDelete").on('click', '.userDelete', function(event){
+
+    var username = $(this).data('username')
+
+    $("#overlay").show();
+    $("#confirmUserDelete").modal('hide');
+
+    $.ajax({
+        data: {
+            username: username
+        },
+        type: 'POST',
+        url: '/_delete_user',
+        success: function(data){
+            // close modal and clear image from screen
+            if (data.status == true){
+
+                $("#overlay").hide();
+                flashMessage('Success!', 'success', 2000);
+                $("#"+username).fadeOut("slow");
+            }
+            else{
+                $("#overlay").hide();
+                flashMessage('Error!', 'danger', 2000);
+            }
+        }
+    });
+});
+
+
+$('.createUserCancel').on('click', function(event){
+   createUserForm = $("#createUserForm")
+   createUserForm.find('input[name="username"]').val('');
+   createUserForm.find('input[name="password"]').val('');
+   $("#createUserModal").modal('hide');
+});
+
+$('.createUserSubmit').on('click', function(event){
+   
+   createUserForm = $("#createUserForm")
+   username = createUserForm.find('input[name="username"]').val();
+   password = createUserForm.find('input[name="password"]').val();
+
+   // send ajax request
+   $.ajax({
+        data: {
+            username: username,
+            password: password
+        },
+        type: 'POST',
+        url: '/_create_user',
+        success: function(data){
+            // close modal and clear image from screen
+            if (data.status == true){
+
+               $("#createUserModal").modal('hide');
+               createUserForm.find('input[name="username"]').val('');
+               createUserForm.find('input[name="password"]').val('');
+               
+                $('#usersTable tr:first').after('<tr id="'+username+'"><td>'+username+'</td><td>'+password+'</td><td class="text-right"><button class="btn btn-xs btn-default deleteUser" data-username="'+username+'" data-toggle="modal" data-target="#confirmUserDelete"><span class="glyphicon glyphicon-remove"></span></button></td></tr>');
+            }
+            else{
+               $("#createUserModal").modal('hide');
+               createUserForm.find('input[name="username"]').val('');
+               createUserForm.find('input[name="password"]').val('');
+               flashMessage(data.message, 'danger', 5000);
+            }
+        }
+    });
+});
+
+
+$('.userInfo').on('click', function () {
+   var username = $(this).attr('data-username')
+
+   $.ajax({
+        data: {
+            username: username
+        },
+        type: 'POST',
+        url: '/_get_user_info',
+        success: function(data){
+            if (data.status == true){
+
+               // clear data from prev modal
+               $('#userInfoAlarms').html('')
+
+
+               $('#userInfoModal').modal('show');
+               $('#info-username').text(username);
+
+               user_info_alarms = data.user_info_alarms;
+
+               if (user_info_alarms.length == 0) {
+                  $('#userInfoAlarms').append('<p>None</p>')
+               } else {
+                  $.each(user_info_alarms, function(i, v){
+                     $('#userInfoAlarms').append('<li>Alarm ID: <strong>'+v+'</strong></li>')
+                  });
+               }
+            }
+            else{
+               flashMessage("Error!", 'danger', 2000);
+            }
+        }
+    });
+
+   
+});
+
+
+// pump calibration
+
+$('body').on('click', '.calibratePump', function(){
+
+      pump = $(this).attr('data-pump')
+      stage = $(this).attr('data-stage')
+      button = $(this)
+
+      console.log(pump)
+
+      
+      if (stage=='2'){
+         $(this).parent().parent().html("<h3>Calibrating...</h3>")
+      }
+
+
+      $.ajax({
+         data: {
+            pump: pump,
+            stage: stage
+         },
+         type: 'POST',
+         url: '/_calibrate_pump',
+         success: function(data){
+
+            console.log(button.attr('data-stage'))
+            console.log(data.status)
+
+            if (data.status == true){
+
+               if (data.stage == '1') {
+
+                  button.attr('data-stage','2')
+                  button.text('Finish Calibration')
+                  button.parent().parent().find('ol.calibratePumpInfo').html("<li>Wait until liquid reaches 50ml mark</li>\
+                     <li>Click 'Finish Calibration'</li>")
+               }
+
+               else if (data.stage == '2') {
+                  // console.log("done")
+                  cal = button.attr('data-cal')
+                  // console.log(cal)
+                  $('#'+cal).collapse('hide')
+                  $('#'+cal).html("<br>\
+                     <div>\
+                     <h4>Instructions</h4>\
+                     <p>\
+                     <ol  class='calibratePumpInfo'>\
+                     <li>Place output tube in measuring cylinder</li>\
+                     <li>Click 'Start Calibration'</li>\
+                     </ol>\
+                     </p>\
+                     </div>\
+                     <br>\
+                     <div class='text-center'>\
+                     <button class='btn btn-default calibratePump' data-pump='"+pump+"' data-stage='1' data-cal='"+cal+"'>Start Calibration</button>\
+                     </div>")
+
+
+                  flashMessage("Calibration Complete!", 'success', 2000);
+               }        
+            }
+
+            else if (data.status == false){
+               cal = button.attr('data-cal')
+               // console.log(cal)
+               $('#'+cal).collapse('hide')
+               $('#'+cal).html("<br>\
+                     <div>\
+                     <h4>Instructions</h4>\
+                     <p>\
+                     <ol  class='calibratePumpInfo'>\
+                     <li>Place output tube in measuring cylinder</li>\
+                     <li>Click 'Start Calibration'</li>\
+                     </ol>\
+                     </p>\
+                     </div>\
+                     <br>\
+                     <div class='text-center'>\
+                     <button class='btn btn-default calibratePump' data-pump='"+pump+"' data-stage='1' data-cal='"+cal+"'>Start Calibration</button>\
+                     </div>")
+               //    //flash failure message!!!!
+               // flash data.message
+               flashMessage("Calibration Failed!", 'danger', 2000);
+            }
+         }
+      });
+   });
+
+
+});
+
+</script>
+
+{%endblock%}

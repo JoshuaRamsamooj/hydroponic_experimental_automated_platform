@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+
+
+{%block body%}
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+    
+<ul class="nav nav-tabs">
+  <li><a href="/alarms/currentalarms/">Current Alarms</a></li>
+  <!-- use data binding for badge -->
+  <li  class="active"><a data-toggle="tab" href="/alarms/alarmlogs/">Logs</a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="currentAlarms" class="tab-pane fade">
+    
+  </div>
+
+  <div id="alarmLogs" class="tab-pane fade  in active">
+
+
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Affected Equipment</th>
+        <th>Date Raised</th>
+        <th>Alarm Status</th>
+        <th>Date Cleared</th>
+        {% if session.admin %}
+        <th>Cleared By</th>
+        {% endif %}
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for alarm in alarms %}
+      
+      <tr>
+        <td rel="alarmid">{{alarm[0]}}</td>
+        <td rel="description">{{alarm[1]}}</td>
+        <td rel="priority">{{alarm[4]}}</td>
+        <td rel="affectedEquipment">{{alarm[5]}}</td>
+        <td rel="dateRaised">{{alarm[2]}}</td>
+        {% if alarm[6] == 0%}
+        <td rel="alarmStatus">Cleared</td>
+        <td rel="dateCleared">{{alarm[3]}}</td>
+        {% if session.admin %}
+        <td rel="clearedBy"> {{alarm[7]}} </td>
+        {% endif %}
+        
+
+        {% else %}
+        <td rel="alarmStatus">Active</td>
+        <td rel="dateCleared"> - </td>
+        {% if session.admin %}
+        <td rel="clearedBy"> - </td>
+        {% endif %}
+        {% endif %}
+      </tr>
+
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+  </div>
+
+</div>
+{%endblock%}

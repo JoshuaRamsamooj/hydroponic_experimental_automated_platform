@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{%block body%}
+
+<div id="alarmNotification"></div>
+<div id="flashMessage"></div>
+<div id="overlay"></div>
+
+<ul class="nav nav-tabs">
+  <li><a href="/data/trends/">Trends</a></li>
+  <!-- use data binding for badge -->
+  <li><a href="/data/images/">Images</a></li>
+  <li class="active"><a data-toggle="tab" href="/data/additionalsensors/">Additional Sensors</a></li>
+  <!-- <li><a href="/data/doselogs/">Dosing Logs</a></li> -->
+</ul>
+
+
+<div class="tab-content">
+  <div id="additionalsensors" class="tab-pane fade in active">
+    <br>
+    <div class="list-group">
+      <a href="/static/additionalsensors/additionalsensor0.csv" class="list-group-item" download>Additional Sensor 0</a>
+      <a href="/static/additionalsensors/additionalsensor1.csv" class="list-group-item" download>Additional Sensor 1</a>
+      <a href="/static/additionalsensors/additionalsensor2.csv" class="list-group-item" download>Additional Sensor 2</a>
+      <a href="/static/additionalsensors/additionalsensor3.csv" class="list-group-item" download>Additional Sensor 3</a>
+      <a href="/static/additionalsensors/additionalsensor4.csv" class="list-group-item" download>Additional Sensor 4</a>
+      <a href="/static/additionalsensors/additionalsensor5.csv" class="list-group-item" download>Additional Sensor 5</a>
+      <a href="/static/additionalsensors/additionalsensor6.csv" class="list-group-item" download>Additional Sensor 6</a>
+      <a href="/static/additionalsensors/additionalsensor7.csv" class="list-group-item" download>Additional Sensor 7</a>
+    </div>
+  </div>
+</div>
+
+
+
+{%endblock%}
